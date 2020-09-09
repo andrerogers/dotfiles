@@ -1,0 +1,75 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.quickOpenSelectNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.quickOpenSelectPrevious",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetVisible"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && suggestWidgetVisible"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "list.collapse",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "list.expand",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "list.focusDown",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "list.focusUp",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "shift+space tab",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "shift+space 0",
+        "command": "workbench.action.focusSideBar"
+    },
+    {
+        "key": "shift+space 1",
+        "command": "workbench.files.action.showActiveFileInExplorer"
+    },
+    {
+        "key": "shift+space right",
+        "command": "workbench.action.nextSideBarView"
+    },
+    {
+        "key": "shift+space left",
+        "command": "workbench.action.previousSideBarView"
+    },
+    {
+        "key": "shift+` right",
+        "command": "workbench.action.terminal.focusNext"
+    },
+    {
+        "key": "shift+space m",
+        "command": "workbench.action.toggleMaximizedPanel"
+    },
+    {
+        "key": "shift+` left",
+        "command": "workbench.action.terminal.focusPrevious"
+    }
+]
