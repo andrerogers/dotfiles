@@ -1,7 +1,5 @@
 ### Installation
 
-Set the ENV Variable, CONFIG_GIT_URL.
-
 #### Linux 
 
 - Run the following curl command,
