@@ -5,7 +5,7 @@
 - Run the following curl command,
 
 ````bash
-curl -Lsk http://bit.do/linux-setup | bash
+curl -Lsk http://bit.do/setup-linux | bash
 ````
 
 The above command will initialize or update the configuration for a Linux system.
