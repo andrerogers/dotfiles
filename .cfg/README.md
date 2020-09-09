@@ -31,13 +31,14 @@ TODO: write batch file to place startup.bat in startup folder and
 
 The above command will initialize or update the configuration for a Windows system.
 
+##### Pre-Req
+
 - startup.bat, place in C:\Users\Owner\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
-  - *creates a virtual drive for development with 'subst', W:*
+- VS Code settings dest - C:\Users\Owner\AppData\Roaming\Code\User\
+- Windows Terminal dest - C:\Users\Owner\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+- - *creates a virtual drive for development with 'subst', W:*
+- Install emacs at C:\emacs
 - Create folder W:\misc
   - shell.bat - sets the shell environment
   - emacs.bat - initializes emacs with its config (inti.el)
   - ws.bat - creates emacs clients when running an emacs server
-
-VS Code settings dest - C:\Users\Owner\AppData\Roaming\Code\User\
-
-Windows Terminal dest - C:\Users\Owner\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
