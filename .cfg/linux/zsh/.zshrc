@@ -1,13 +1,15 @@
 export LANG=en_US.UTF-8
-export TERM=xterm-256color
+#export TERM=xterm-256color
 
-export ZSH="/home/andre/.oh-my-zsh"
+#export ZSH="/home/andre/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 export ZSH_DISABLE_COMPFIX=true
 
-export WIN_HOME=/mnt/c/Users/Owner
-export GOPATH=/mnt/c/Users/Owner/Documents/go
-export WIN_PROJECTS_HOME=/mnt/c/Users/Owner/Documents/Projects
-export PROJECTS_HOME=$HOME/Projects
+#export WIN_HOME=/mnt/c/Users/Owner
+#export GOPATH=/mnt/c/Users/Owner/Documents/go
+export GOPATH=$HOME/go
+#export WIN_PROJECTS_HOME=/mnt/c/Users/Owner/Documents/Projects
+#export PROJECTS_HOME=$HOME/Projects
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPATH/bin:/usr/bin:$PATH
 
 export DOCKER_HOST=tcp://localhost:2375
@@ -26,7 +28,7 @@ CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # set LS_COLORS
-eval `dircolors ~/.cfg/linux/.dircolors`
+#eval `dircolors ~/.cfg/linux/.dircolors`
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -43,14 +45,14 @@ fortune | cowsay
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/andre/.anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/.anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/andre/.anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/andre/.anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/.anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/.anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/andre/.anaconda3/bin:$PATH"
+        export PATH="$HOME/.anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -61,8 +63,3 @@ alias clang++="clang++-9"
 alias l="ls -latr"
 
 cd $HOME
-
-# Scala
-#
-
-alias test='python v3_test.py'
