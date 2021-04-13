@@ -27,10 +27,10 @@ font pango:Fira Code Retina 8
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Configure picom for transperancy 
-exec --no-startup-id picom --config /home/vagrant/.config/picom/picom.conf -b
+exec --no-startup-id picom --config /home/andre/.config/picom/picom.conf -b
 
 # lock the screen
-bindsym $mod+p exec /home/vagrant/.lock.sh
+bindsym $mod+p exec /home/andre/.lock.sh
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -164,8 +164,8 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you want to logout off yo
 
 # shutdown, restart, logout of system
 mode "shutdown" {
-        bindsym 1 exec /home/vagrant/.lock.sh 1; exec killall i3-nagbar # lock
-        bindsym 2 exec /home/vagrant/.lock.sh 2; exec killall i3-nagbar # suspend
+        bindsym 1 exec /home/andre/.lock.sh 1; exec killall i3-nagbar # lock
+        bindsym 2 exec /home/andre/.lock.sh 2; exec killall i3-nagbar # suspend
         bindsym 3 exec killall i3-nagbar; restart
         bindsym 4 reload; exec killall i3-nagbar
         bindsym 5 exit
@@ -177,7 +177,7 @@ mode "shutdown" {
 }
 
 # enter shutdown mode and cache lockscreen image
-bindsym Ctrl+$mod+r mode "shutdown"; exec /home/vagrant/.lock-screenshot.sh; exec "i3-nagbar -m '(1) lock, (2) suspend, (3) restart, (4) reload config, (5) logout'" 
+bindsym Ctrl+$mod+r mode "shutdown"; exec /home/andre/.lock-screenshot.sh; exec "i3-nagbar -m '(1) lock, (2) suspend, (3) restart, (4) reload config, (5) logout'" 
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -209,7 +209,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar 
 bar {
 	font pango:Fira Code Retina 8
-        status_command i3blocks -c /home/vagrant/.config/i3blocks/i3blocks.conf
+        status_command i3blocks -c /home/andre/.config/i3blocks/i3blocks.conf
 	colors {
 #				  	border  bg	  text
 		focused_workspace	#dddddd #2f2f2f #ffffff
