@@ -63,3 +63,8 @@ alias clang++="clang++-9"
 alias l="ls -latr"
 
 cd $HOME
+
+# uncomment for starting i3
+# if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+# 	exec startx
+# fi
