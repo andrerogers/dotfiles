@@ -5,6 +5,8 @@ export LANG=en_US.UTF-8
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_DISABLE_COMPFIX=true
 
+alias runemacs='emacs -l ~/.emacs.el'
+
 #export WIN_HOME=/mnt/c/Users/Owner
 #export GOPATH=/mnt/c/Users/Owner/Documents/go
 export GOPATH=$HOME/go
