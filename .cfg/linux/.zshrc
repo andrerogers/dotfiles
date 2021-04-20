@@ -42,8 +42,8 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # dashboard
-screenfetch-dev
-fortune | cowsay
+#screenfetch-dev
+#fortune | cowsay
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
