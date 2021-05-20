@@ -5,7 +5,7 @@
 - Run the following curl command,
 
 ````bash
-curl -Lsk https://tinyurl.com/setup-linux | bash
+curl -Lsk https://tinyurl.com/playground-setup | bash
 ````
 
 The above command will initialize or update the configuration for a Linux system.
