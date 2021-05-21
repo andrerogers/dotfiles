@@ -155,7 +155,9 @@
 (ace-window-display-mode 1)
 (global-set-key (kbd "M-o") 'ace-window)
 
-;; resizing windows (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally) (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+;; resizing windows
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<down>") 'shrink-window)
 (global-set-key (kbd "S-C-<up>") 'enlarge-window)
 
@@ -568,5 +570,3 @@
  (modify-face 'font-lock-study-face "Yellow" nil nil t nil t nil nil)
  (modify-face 'font-lock-important-face "Yellow" nil nil t nil t nil nil)
  (modify-face 'font-lock-note-face "Dark Green" nil nil t nil t nil nil)
-
-;; --------------------------------
