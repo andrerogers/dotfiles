@@ -1,14 +1,12 @@
 export LANG=en_US.UTF-8
-#export TERM=xterm-256color
-#
+export TERM=xterm-256color
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_DISABLE_COMPFIX=true
-
 export GOPATH=$HOME/go
 
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPATH/bin:/usr/bin:$PATH
 
-export DOCKER_HOST=tcp://localhost:2375
+#export DOCKER_HOST=tcp://localhost:2375
 
 alias clang="clang-9"
 alias clang++="clang++-9"
@@ -37,3 +35,5 @@ source $ZSH/oh-my-zsh.sh
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
 	exec startx
 fi
+
+xrdb ~/.Xresources
