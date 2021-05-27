@@ -2,9 +2,9 @@
 
 #PICTURE=/tmp/lock.png
 #SCREENSHOT="scrot $PICTURE"
-
 #$SCREENSHOT
 #betterlockscreen -u $PICTURE
+#rm $PICTURE
 
 if [ "$1" == "1" ]; then
 	betterlockscreen -l dimblur
@@ -14,4 +14,3 @@ if [ "$1" == "2" ]; then
 	betterlockscreen -s dimblur
 fi
 
-rm $PICTURE
