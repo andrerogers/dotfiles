@@ -6,6 +6,13 @@
 #betterlockscreen -u $PICTURE
 #rm $PICTURE
 
+CMD=betterlockscreen
+
+if test -f "$LOCK_PICTURE"; then
+    CMD=betterlockscreen -u $LOCK_PICTURE
+fi
+
+
 if [ "$1" == "1" ]; then
 	betterlockscreen -l dimblur
 fi
