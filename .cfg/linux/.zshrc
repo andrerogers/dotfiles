@@ -8,6 +8,8 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPA
 
 #export DOCKER_HOST=tcp://localhost:2375
 
+export LOCK_PICTURE=/tmp/lock.png
+
 alias clang="clang-9"
 alias clang++="clang++-9"
 alias l="ls -latr"
