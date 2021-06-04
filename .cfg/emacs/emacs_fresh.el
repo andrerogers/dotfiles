@@ -23,7 +23,8 @@
 
 ;; You will most likely need to adjust this font size for your system!
 (defvar runemacs/default-font-size 180)
-(defvar efs/default-variable-font-size 180)
+;; (defvar efs/default-variable-font-size 180)
+
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
 
@@ -181,7 +182,7 @@
 	 ("C-x b" . counsel-ibuffer) 
 	 ("C-x C-f" . counsel-find-file) 
 	 :map minibuffer-local-map ("C-r" . 'counsel-minibuffer-history)))
-
+ 
 (use-package 
   helpful 
   :custom (counsel-describe-function-function #'helpful-callable) 
@@ -251,6 +252,11 @@
   counsel-projectile 
   :config (counsel-projectile-mode))
 
+(setq counsel-grep-base-command
+ "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+
+(global-set-key "\eS" 'counsel-rg)
+
 (use-package 
   magit 
   :custom (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
@@ -266,15 +272,15 @@
 
 ;;(use-package breadcrumb)
 
-(defun efs/lsp-mode-setup () 
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols)) 
-  (lsp-headerline-breadcrumb-mode))
+;; (defun efs/lsp-mode-setup () 
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols)) 
+;;   (lsp-headerline-breadcrumb-mode))
 
 (use-package 
   lsp-mode 
   :commands (lsp lsp-deferred) 
   :hook (lsp-mode . efs/lsp-mode-setup) 
-  :hook ((c-mode c++-mode json-mode python-mode tex-mode typescript-mode xml-mode go-mode) . lsp) 
+  ;; :hook ((c-mode c++-mode json-mode python-mode tex-mode typescript-mode xml-mode go-mode) . lsp)  todo add this to a clause if being using in GUI
   :init (setq lsp-keymap-prefix "C-c l") ;; Or 'C-l', 's-l'
   :config (lsp-enable-which-key-integration t))
 
@@ -315,7 +321,6 @@
     "d" '(dap-hydra t :wk "debugger")))
 
 ;; Company
-
 (use-package 
   company 
   :after lsp-mode 
