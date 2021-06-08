@@ -21,6 +21,12 @@ The above command will initialize or update the configuration for a Linux system
 - Golang
 - NVM (Node.js, JS)
 
+After neovim has install plugins by starting it, execute the following
+````bash
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --all
+````
+
 #### Windows
 
 - Run the following command,
