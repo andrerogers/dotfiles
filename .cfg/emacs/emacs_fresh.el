@@ -14,12 +14,12 @@
 ;; reliably, set `user-emacs-directory` before loading no-littering!
 (setq user-emacs-directory "~/.cache/emacs")
 
-(use-package no-littering)
+(use-package 
+  no-littering)
 
 ;; no-littering doesn't set this by default so we must place
 ;; auto save files in the same path as it uses for sessions
-(setq auto-save-file-name-transforms
-      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+(setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
 ;; You will most likely need to adjust this font size for your system!
 (defvar runemacs/default-font-size 180)
@@ -92,6 +92,12 @@
 ;; Don't create backup files
 (setq make-backup-files nil)
 
+;; Window Resizing
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally) 
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally) 
+(global-set-key (kbd "S-C-<down>") 'shrink-window) 
+(global-set-key (kbd "S-C-<up>") 'enlarge-window)
+
 ;; Initialize package sources
 (require 'package)
 
@@ -110,13 +116,12 @@
 (setq use-package-always-ensure t)
 
 ;; Auto update packages
-(use-package auto-package-update
-  :custom
-  (auto-package-update-interval 7)
-  (auto-package-update-prompt-before-update t)
-  (auto-package-update-hide-results t)
-  :config
-  (auto-package-update-maybe)
+(use-package 
+  auto-package-update 
+  :custom (auto-package-update-interval 7) 
+  (auto-package-update-prompt-before-update t) 
+  (auto-package-update-hide-results t) 
+  :config (auto-package-update-maybe) 
   (auto-package-update-at-time "09:00"))
 
 (column-number-mode)
@@ -131,7 +136,8 @@
   command-log-mode)
 
 (use-package 
-  ivy
+  ivy 
+
   :diminish 
   :bind (("C-s" . swiper) :map ivy-minibuffer-map ("TAB" . ivy-alt-done) 
 	 ("C-l" . ivy-alt-done) 
@@ -182,7 +188,7 @@
 	 ("C-x b" . counsel-ibuffer) 
 	 ("C-x C-f" . counsel-find-file) 
 	 :map minibuffer-local-map ("C-r" . 'counsel-minibuffer-history)))
- 
+
 (use-package 
   helpful 
   :custom (counsel-describe-function-function #'helpful-callable) 
@@ -252,8 +258,7 @@
   counsel-projectile 
   :config (counsel-projectile-mode))
 
-(setq counsel-grep-base-command
- "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+(setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
 
 (global-set-key "\eS" 'counsel-rg)
 
@@ -272,14 +277,14 @@
 
 ;;(use-package breadcrumb)
 
-;; (defun efs/lsp-mode-setup () 
-;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols)) 
+;; (defun efs/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
 ;;   (lsp-headerline-breadcrumb-mode))
 
 (use-package 
   lsp-mode 
   :commands (lsp lsp-deferred) 
-  :hook (lsp-mode . efs/lsp-mode-setup) 
+  :hook (lsp-mode . efs/lsp-mode-setup)
   ;; :hook ((c-mode c++-mode json-mode python-mode tex-mode typescript-mode xml-mode go-mode) . lsp)  todo add this to a clause if being using in GUI
   :init (setq lsp-keymap-prefix "C-c l") ;; Or 'C-l', 's-l'
   :config (lsp-enable-which-key-integration t))
@@ -302,23 +307,24 @@
 (define-key global-map "\eF" 'format-buffer)
 
 ;; DAP Mode
-(use-package dap-mode
+(use-package 
+  dap-mode
   ;; Uncomment the config below if you want all UI panes to be hidden by default!
   ;; :custom
   ;; (lsp-enable-dap-auto-configure nil)
   ;; :config
   ;; (dap-ui-mode 1)
-  :commands dap-debug
+  :commands dap-debug 
   :config
   ;; Set up Node debugging
-  (require 'dap-node)
+  (require 'dap-node) 
   (dap-node-setup) ;; Automatically installs Node debug adapter if needed
 
   ;; Bind `C-c l d` to `dap-hydra` for easy access
-  (general-define-key
-    :keymaps 'lsp-mode-map
-    :prefix lsp-keymap-prefix
-    "d" '(dap-hydra t :wk "debugger")))
+  (general-define-key :keymaps 'lsp-mode-map 
+		      :prefix lsp-keymap-prefix 
+		      "d" '(dap-hydra t 
+				      :wk "debugger")))
 
 ;; Company
 (use-package 
@@ -366,7 +372,8 @@
 
 ;; TypeScript
 (use-package 
-  prettier-js
+  prettier-js 
+
   :delight 
   :custom (prettier-js-args '("--print-width" "100" "--single-quote" "true" "--trailing-comma"
 			      "all")))
