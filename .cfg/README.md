@@ -1,12 +1,12 @@
 ### Installation
 
-#### Linux 
+#### Linux
 
 - Run the following curl command,
 
-````bash
+```bash
 curl -Lsk https://tinyurl.com/playground-setup | bash
-````
+```
 
 The above command will initialize or update the configuration for a Linux system.
 
@@ -22,18 +22,19 @@ The above command will initialize or update the configuration for a Linux system
 - NVM (Node.js, JS)
 
 After neovim has install plugins by starting it, execute the following
-````bash
+
+```bash
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --all
-````
+```
 
 #### Windows
 
 - Run the following command,
 
-`````
-TODO: write batch file to place startup.bat in startup folder and 
-`````
+```
+TODO: write batch file to place startup.bat in startup folder and
+```
 
 The above command will initialize or update the configuration for a Windows system.
 
@@ -42,7 +43,7 @@ The above command will initialize or update the configuration for a Windows syst
 - startup.bat, place in C:\Users\Owner\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
   - VS Code settings dest - C:\Users\Owner\AppData\Roaming\Code\User\
   - Windows Terminal dest - C:\Users\Owner\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
-  - *creates a virtual drive for development with 'subst', W:*
+  - _creates a virtual drive for development with 'subst', W:_
 - Install emacs at C:\emacs
 - Create folder W:\misc
   - shell.bat - sets the shell environment

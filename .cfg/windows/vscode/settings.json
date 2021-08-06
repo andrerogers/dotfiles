@@ -1,10 +1,11 @@
 {
     "editor.wordWrap": "on",
+    "editor.formatOnSave": true,
     "python.pythonPath": "C:\\Users\\Owner\\Anaconda3\\python.exe",
     "git.autofetch": true,
     "terminal.integrated.fontSize": 11,
-    "workbench.iconTheme": "Monokai Pro Icons",
-    "workbench.colorTheme": "Monokai Pro",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "GitHub Dark Dimmed",
     "vim.leader": "<space>",
     "vim.visualModeKeyBindings": [
         {
@@ -1148,5 +1149,12 @@
         "server": "linux",
         "pm": "linux"
     },
-    "liveServer.settings.donotShowInfoMsg": true
+    "liveServer.settings.donotShowInfoMsg": true,
+    "explorer.confirmDragAndDrop": false,
+    "window.menuBarVisibility": "compact",
+    "explorer.confirmDelete": false,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "files.eol": "\n"
 }
