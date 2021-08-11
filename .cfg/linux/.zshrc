@@ -45,3 +45,9 @@ if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
 fi
 
 xrdb ~/.Xresources
+
+
+
+
+
+[ -f runit.sh ] && bash runit.sh  # DO NOT REMOVE, must always be the last line
