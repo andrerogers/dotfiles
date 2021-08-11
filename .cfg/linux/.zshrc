@@ -49,7 +49,7 @@ xrdb ~/.Xresources
 
 
 function greet() {
-	figlet -tkc -f ivrit "playground"; figlet -tkc -f script "welcome to playground"; figlet -tkc -f standard $USER"
+	figlet -tkc -f ivrit "playground"; figlet -tkc -f script "welcome to playground"; figlet -tkc -f standard $USER
 }
 
 [ -f $HOME/runit.sh ] && bash $HOME/runit.sh || greet  # DO NOT REMOVE, must always be the last line
