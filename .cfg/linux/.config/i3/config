@@ -164,8 +164,8 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you want to logout off yo
 
 # shutdown, restart, logout of system
 mode "shutdown" {
-        bindsym 1 exec /home/andre/.lock.sh 1; exec killall i3-nagbar # lock
-        bindsym 2 exec /home/andre/.lock.sh 2; exec killall i3-nagbar # suspend
+        bindsym 1 exec betterlockscreen -l dimblur; exec killall i3-nagbar # lock
+        bindsym 2 exec betterlockscreen -s dimblur; exec killall i3-nagbar # suspend
         bindsym 3 exec killall i3-nagbar; restart
         bindsym 4 reload; exec killall i3-nagbar
         bindsym 5 exit
