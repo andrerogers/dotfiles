@@ -14,13 +14,6 @@
 ;; reliably, set `user-emacs-directory` before loading no-littering!
 (setq user-emacs-directory "~/.cache/emacs")
 
-(use-package 
-  no-littering)
-
-;; no-littering doesn't set this by default so we must place
-;; auto save files in the same path as it uses for sessions
-(setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-
 ;; You will most likely need to adjust this font size for your system!
 (defvar runemacs/default-font-size 180)
 ;; (defvar efs/default-variable-font-size 180)
@@ -132,6 +125,13 @@
   (add-hook mode (lambda () 
 		   (display-line-numbers-mode 0))))
 
+
+(use-package no-littering)
+
+; no-littering doesn't set this by default so we must place
+;; auto save files in the same path as it uses for sessions
+(setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
 (use-package 
   command-log-mode)
 
@@ -180,7 +180,7 @@
 
 (use-package 
   ivy-rich 
-  :init (ivy-rich-mode 1))
+  :init (setq ivy-rich-mode 1))
 
 (use-package 
   counsel 
@@ -307,24 +307,24 @@
 (define-key global-map "\eF" 'format-buffer)
 
 ;; DAP Mode
-(use-package 
-  dap-mode
+;;(use-package 
+;; dap-mode
   ;; Uncomment the config below if you want all UI panes to be hidden by default!
   ;; :custom
   ;; (lsp-enable-dap-auto-configure nil)
   ;; :config
   ;; (dap-ui-mode 1)
-  :commands dap-debug 
-  :config
+  ;; :commands dap-debug 
+  ;; :config
   ;; Set up Node debugging
-  (require 'dap-node) 
-  (dap-node-setup) ;; Automatically installs Node debug adapter if needed
+  ;;(require 'dap-node) 
+  ;;(dap-node-setup) ;; Automatically installs Node debug adapter if needed
 
   ;; Bind `C-c l d` to `dap-hydra` for easy access
-  (general-define-key :keymaps 'lsp-mode-map 
-		      :prefix lsp-keymap-prefix 
-		      "d" '(dap-hydra t 
-				      :wk "debugger")))
+  ;;(general-define-key :keymaps 'lsp-mode-map 
+;;		      :prefix lsp-keymap-prefix 
+;;		      "d" '(dap-hydra t 
+;;				      :wk "debugger")))
 
 ;; Company
 (use-package 
@@ -395,3 +395,16 @@
 (use-package 
   rainbow-delimiters 
   :hook (prog-mode . rainbow-delimiters-mode))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(evil-nerd-commenter typescript-mode prettier-js google-c-style ccls elisp-format company-box company which-key use-package rainbow-delimiters no-littering magit lsp-ui lsp-ivy ivy-rich helpful general evil-collection doom-themes doom-modeline dap-mode counsel-projectile command-log-mode auto-package-update)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
