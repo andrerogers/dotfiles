@@ -4,9 +4,9 @@
 #betterlockscreen -u $PICTURE
 #rm $PICTURE
 
-PICTURE=/tmp/lock.png
-scrot $PICTURE
-betterlockscreen -u $PICTURE
+# PICTURE=/tmp/lock.png
+# scrot $PICTURE
+# betterlockscreen -u $PICTURE
 
 
 if [ "$1" == "1" ]; then
