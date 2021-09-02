@@ -164,7 +164,7 @@
 
 (use-package 
   doom-themes 
-  :init (load-theme 'doom-gruvbox t))
+  :init (load-theme 'doom-dark+ t))
 
 (use-package 
   rainbow-delimiters 
