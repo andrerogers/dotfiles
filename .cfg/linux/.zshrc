@@ -8,15 +8,16 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPA
 
 #export DOCKER_HOST=tcp://localhost:2375
 
-export EDITOR='emacsclient -t'
-export VISUAL='emacsclient -t'
+export EDITOR='emacsclient -s workspace -c'
+export VISUAL='emacsclient -s workspace -c'
 export ALTERNATE_EDITOR=''
 
 alias clang="clang-9"
 alias clang++="clang++-9"
 alias l="ls -latr"
 alias c="clear"
-alias e='emacsclient --tty'
+alias es='emacs --daemon=workspace'
+alias e='emacsclient -s workspace -c'
 alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/sensei-dre"
 
 ZSH_THEME="powerlevel9k/powerlevel9k"

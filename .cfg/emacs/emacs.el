@@ -29,7 +29,7 @@
 
 (setq inhibit-startup-message t)
 
-(if (display-graphic-p) 
+(if (or (display-graphic-p) (daemonp))
     (progn (scroll-bar-mode -1)		; Disable visible scrollbar
 	   (tool-bar-mode -1)		; Disable the toolbar
 	   (tooltip-mode -1)		; Disable tooltips
@@ -55,7 +55,7 @@
 (setq os-win32 (not (or os-aquamacs 
 			os-linux)))
 
-(setq emacs-config "~/.emacs")
+(setq emacs-config "~/.emacs.el")
 
 ;; windows - windows-nt, ms-dos
 ;; linux - gnu, gnu/linux
@@ -64,8 +64,6 @@
 (if (or (eq system-type 'windows-nt) 
 	(eq system-type 'ms-dos)) 
     (setq emacs-config "W:\misc\.emacs.el"))
-
-(when os-win32)
 
 (defun load-emacs-config () 
   (interactive) 
@@ -166,7 +164,7 @@
 
 (use-package 
   doom-themes 
-  :init (load-theme 'doom-gruvbox t))
+  :init (load-theme 'doom-dark+ t))
 
 (use-package 
   rainbow-delimiters 
