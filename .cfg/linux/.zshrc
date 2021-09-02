@@ -8,8 +8,8 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPA
 
 #export DOCKER_HOST=tcp://localhost:2375
 
-export EDITOR='emacsclient -s workspace'
-export VISUAL='emacsclient -s workspace'
+export EDITOR='emacsclient -s workspace -c'
+export VISUAL='emacsclient -s workspace -c'
 export ALTERNATE_EDITOR=''
 
 alias clang="clang-9"
