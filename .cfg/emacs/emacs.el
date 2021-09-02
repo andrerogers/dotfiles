@@ -55,7 +55,7 @@
 (setq os-win32 (not (or os-aquamacs 
 			os-linux)))
 
-(setq emacs-config "~/.emacs")
+(setq emacs-config "~/.emacs.el")
 
 ;; windows - windows-nt, ms-dos
 ;; linux - gnu, gnu/linux
@@ -64,8 +64,6 @@
 (if (or (eq system-type 'windows-nt) 
 	(eq system-type 'ms-dos)) 
     (setq emacs-config "W:\misc\.emacs.el"))
-
-(when os-win32)
 
 (defun load-emacs-config () 
   (interactive) 
