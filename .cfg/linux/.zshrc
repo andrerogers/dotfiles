@@ -17,7 +17,7 @@ alias clang++="clang++-9"
 alias l="ls -latr"
 alias c="clear"
 alias es='emacs --daemon=workspace'
-alias e='emacsclient -s workspace'
+alias e='emacsclient -s workspace -c'
 alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/sensei-dre"
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
