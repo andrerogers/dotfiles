@@ -16,7 +16,8 @@ alias clang="clang-9"
 alias clang++="clang++-9"
 alias l="ls -latr"
 alias c="clear"
-alias e='emacsclient --tty'
+alias e='emacsclient'
+#alias e='emacsclient --tty'
 alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/sensei-dre"
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
