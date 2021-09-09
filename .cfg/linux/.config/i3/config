@@ -29,6 +29,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # Configure picom for transperancy 
 exec --no-startup-id picom --config /home/sensei-dre/.config/picom/picom.conf -b
 
+# start clipit
+exec --no-startup-id clipit
+
 # lock the screen
 bindsym $mod+p exec /home/sensei-dre/.lock.sh 1
 
