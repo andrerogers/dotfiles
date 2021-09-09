@@ -172,6 +172,7 @@ mode "shutdown" {
         bindsym 3 exec killall i3-nagbar; restart
         bindsym 4 reload; exec killall i3-nagbar
         bindsym 5 exit
+        bindsym 6 exec shutdown now 
 
         # back to normal: Enter or Escape or Ctrl+$mod+r
         bindsym Return mode "default"; exec killall i3-nagbar
@@ -180,7 +181,7 @@ mode "shutdown" {
 }
 
 # enter shutdown mode and cache lockscreen image
-bindsym Ctrl+$mod+r mode "shutdown"; exec /home/sensei-dre/.grab-lockscreen.sh; exec "i3-nagbar -m '(1) lock, (2) suspend, (3) restart, (4) reload config, (5) logout'" 
+bindsym Ctrl+$mod+r mode "shutdown"; exec /home/sensei-dre/.grab-lockscreen.sh; exec "i3-nagbar -m '(1) lock, (2) suspend, (3) restart, (4) reload config, (5) logout (6) shutdown'" 
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
