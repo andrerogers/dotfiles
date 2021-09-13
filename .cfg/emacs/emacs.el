@@ -5,8 +5,7 @@
   (message "Emacs loaded in %s with %d garbage collections." (format "%.2f seconds" (float-time
 										     (time-subtract
 										      after-init-time
-										      before-init-time)))
-	   gcs-done))
+										      before-init-time))) gcs-done))
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
@@ -164,7 +163,7 @@
 
 (use-package 
   doom-themes 
-  :init (load-theme 'doom-dark+ t))
+  :init (load-theme 'doom-tomorrow-night t))
 
 (use-package 
   rainbow-delimiters 
