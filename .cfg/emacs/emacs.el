@@ -18,13 +18,13 @@
 ;; (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(90 . 90))
+(defvar efs/frame-transparency '(98. 98))
 
 ;; Set frame transparency
 (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
 (add-to-list 'default-frame-alist `(alpha . ,efs/frame-transparency))
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . fullscreen))
 
 (setq inhibit-startup-message t)
 
