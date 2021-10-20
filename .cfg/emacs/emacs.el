@@ -5,7 +5,8 @@
   (message "Emacs loaded in %s with %d garbage collections." (format "%.2f seconds" (float-time
 										     (time-subtract
 										      after-init-time
-										      before-init-time))) gcs-done))
+										      before-init-time)))
+	   gcs-done))
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
@@ -28,7 +29,8 @@
 
 (setq inhibit-startup-message t)
 
-(if (or (display-graphic-p) (daemonp))
+(if (or (display-graphic-p) 
+	(daemonp)) 
     (progn (scroll-bar-mode -1)		; Disable visible scrollbar
 	   (tool-bar-mode -1)		; Disable the toolbar
 	   (tooltip-mode -1)		; Disable tooltips
@@ -83,9 +85,9 @@
 (setq make-backup-files nil)
 
 ;; Window Resizing
-(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally) 
-(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally) 
-(global-set-key (kbd "S-C-<down>") 'shrink-window) 
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "S-C-<down>") 'shrink-window)
 (global-set-key (kbd "S-C-<up>") 'enlarge-window)
 
 ;; Initialize package sources
@@ -123,9 +125,10 @@
 		   (display-line-numbers-mode 0))))
 
 
-(use-package no-littering)
+(use-package 
+  no-littering)
 
-; no-littering doesn't set this by default so we must place
+					; no-littering doesn't set this by default so we must place
 ;; auto save files in the same path as it uses for sessions
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
@@ -133,8 +136,7 @@
   command-log-mode)
 
 (use-package 
-  ivy 
-
+  ivy
   :diminish 
   :bind (("C-s" . swiper) :map ivy-minibuffer-map ("TAB" . ivy-alt-done) 
 	 ("C-l" . ivy-alt-done) 
@@ -281,8 +283,8 @@
 (use-package 
   lsp-mode 
   :commands (lsp lsp-deferred) 
-  :hook (lsp-mode . efs/lsp-mode-setup)
-  ;; :hook ((c-mode c++-mode json-mode python-mode tex-mode typescript-mode xml-mode go-mode) . lsp)  todo add this to a clause if being using in GUI
+  :hook (lsp-mode . efs/lsp-mode-setup) 
+  :hook ((c-mode c++-mode json-mode python-mode tex-mode typescript-mode xml-mode go-mode) . lsp) 
   :init (setq lsp-keymap-prefix "C-c l") ;; Or 'C-l', 's-l'
   :config (lsp-enable-which-key-integration t))
 
@@ -304,23 +306,23 @@
 (define-key global-map "\eF" 'format-buffer)
 
 ;; DAP Mode
-;;(use-package 
+;;(use-package
 ;; dap-mode
-  ;; Uncomment the config below if you want all UI panes to be hidden by default!
-  ;; :custom
-  ;; (lsp-enable-dap-auto-configure nil)
-  ;; :config
-  ;; (dap-ui-mode 1)
-  ;; :commands dap-debug 
-  ;; :config
-  ;; Set up Node debugging
-  ;;(require 'dap-node) 
-  ;;(dap-node-setup) ;; Automatically installs Node debug adapter if needed
+;; Uncomment the config below if you want all UI panes to be hidden by default!
+;; :custom
+;; (lsp-enable-dap-auto-configure nil)
+;; :config
+;; (dap-ui-mode 1)
+;; :commands dap-debug
+;; :config
+;; Set up Node debugging
+;;(require 'dap-node)
+;;(dap-node-setup) ;; Automatically installs Node debug adapter if needed
 
-  ;; Bind `C-c l d` to `dap-hydra` for easy access
-  ;;(general-define-key :keymaps 'lsp-mode-map 
-;;		      :prefix lsp-keymap-prefix 
-;;		      "d" '(dap-hydra t 
+;; Bind `C-c l d` to `dap-hydra` for easy access
+;;(general-define-key :keymaps 'lsp-mode-map
+;;		      :prefix lsp-keymap-prefix
+;;		      "d" '(dap-hydra t
 ;;				      :wk "debugger")))
 
 ;; Company
@@ -345,6 +347,17 @@
 (eval-after-load 'company '(push 'company-c-headers company-backends))
 
 ;; Languages
+(use-package 
+  flycheck 
+  :ensure t 
+  :init (global-flycheck-mode))
+
+(use-package 
+  flymake-shellcheck
+  :commands flymake-shellcheck-load
+  :init
+  (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
+
 ;; Elisp
 (use-package 
   elisp-format)
@@ -385,6 +398,12 @@
 								   prettier-js-mode)))) 
   :config (setq typescript-indent-level 2))
 
+;; Solidity
+(require 'solidity-mode)
+(setq solidity-comment-style 'slash)
+(setq solidity-solc-path "/usr/bin/solcjs")
+;; TODO: need to add a conditional here to set a path for windows
+
 (use-package 
   evil-nerd-commenter 
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
@@ -397,8 +416,27 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(evil-nerd-commenter typescript-mode prettier-js google-c-style ccls elisp-format company-box company which-key use-package rainbow-delimiters no-littering magit lsp-ui lsp-ivy ivy-rich helpful general evil-collection doom-themes doom-modeline dap-mode counsel-projectile command-log-mode auto-package-update)))
+ '(helm-minibuffer-history-key "M-p") 
+ '(package-selected-packages '(flycheck-clang-analyzer flycheck-clang-tidy flycheck-clangcheck
+						       flycheck-color-mode-line
+						       flycheck-golangci-lint flycheck-gometalinter
+						       flycheck-google-cpplint flycheck-pycheckers
+						       flymake flymake-css flymake-eslint
+						       flymake-flycheck flymake-go
+						       flymake-go-staticcheck flymake-golangci
+						       flymake-jslint flymake-json
+						       flymake-python-pyflakes flymake-shell
+						       flymake-shellcheck flyspell-correct
+						       flyspell-correct-ivy fontawesome flymake-yaml
+						       flymake-solidity company-solidity
+						       solidity-mode flycheck evil-nerd-commenter
+						       typescript-mode prettier-js google-c-style
+						       ccls elisp-format company-box company
+						       which-key use-package rainbow-delimiters
+						       no-littering magit lsp-ui lsp-ivy ivy-rich
+						       helpful general evil-collection doom-themes
+						       doom-modeline dap-mode counsel-projectile
+						       command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
