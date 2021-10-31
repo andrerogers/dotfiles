@@ -399,7 +399,7 @@
   :config (setq typescript-indent-level 2))
 
 ;; Solidity
-(require 'solidity-mode)
+(use-package solidity-mode)
 (setq solidity-comment-style 'slash)
 (setq solidity-solc-path "/usr/bin/solcjs")
 ;; TODO: need to add a conditional here to set a path for windows
