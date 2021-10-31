@@ -1,5 +1,7 @@
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-exec i3
-
 xrdb ~/.Xresources
+
+feh --recursive --bg-fill --randomize $HOME/.cfg/wallpapers
+
+exec i3
