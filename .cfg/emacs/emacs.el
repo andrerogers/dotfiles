@@ -136,8 +136,7 @@
   command-log-mode)
 
 (use-package 
-  ivy 
-
+  ivy
   :diminish 
   :bind (("C-s" . swiper) :map ivy-minibuffer-map ("TAB" . ivy-alt-done) 
 	 ("C-l" . ivy-alt-done) 
@@ -345,7 +344,8 @@
   :hook (company-mode . company-box-mode))
 
 (add-hook 'after-init-hook 'global-company-mode)
-(eval-after-load 'company '(push 'company-c-headers company-backends))
+(eval-after-load 'company '(append '((company-c-headers company-solidity company-capf company-dabbrev-code))
+					     company-backends))
 
 ;; Languages
 (use-package 
@@ -382,7 +382,8 @@
 
 ;; TypeScript
 (use-package 
-  prettier-js
+  prettier-js 
+
   :delight 
   :custom (prettier-js-args '("--print-width" "100" "--single-quote" "true" "--trailing-comma"
 			      "all")))
@@ -399,17 +400,10 @@
 
 ;; Solidity
 (use-package 
-  solidity-mode
+  solidity-mode 
   :config (setq solidity-comment-style 'slash) 
   :config (setq solidity-solc-path '/usr/bin/solcjs))
 ;; TODO: need to add a conditional here to set a path for windows
-
-(add-hook 'solidity-mode-hook
-	(lambda ()
-	(set (make-local-variable 'company-backends)
-		(append '((company-solidity company-capf company-dabbrev-code))
-			company-backends))))
-
 
 (use-package 
   evil-nerd-commenter 
@@ -423,9 +417,25 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(helm-minibuffer-history-key "M-p")
- '(package-selected-packages
-   '(solidity-flycheck flycheck-clang-analyzer flycheck-clang-tidy flycheck-clangcheck flycheck-color-mode-line flycheck-golangci-lint flycheck-gometalinter flycheck-google-cpplint flycheck-pycheckers flymake flymake-css flymake-eslint flymake-flycheck flymake-go flymake-go-staticcheck flymake-golangci flymake-jslint flymake-json flymake-python-pyflakes flymake-shell flymake-shellcheck flyspell-correct flyspell-correct-ivy fontawesome flymake-yaml flymake-solidity company-solidity solidity-mode flycheck evil-nerd-commenter typescript-mode prettier-js google-c-style ccls elisp-format company-box company which-key use-package rainbow-delimiters no-littering magit lsp-ui lsp-ivy ivy-rich helpful general evil-collection doom-themes doom-modeline dap-mode counsel-projectile command-log-mode auto-package-update)))
+ '(helm-minibuffer-history-key "M-p") 
+ '(package-selected-packages '(solidity-flycheck flycheck-clang-analyzer flycheck-clang-tidy
+						 flycheck-clangcheck flycheck-color-mode-line
+						 flycheck-golangci-lint flycheck-gometalinter
+						 flycheck-google-cpplint flycheck-pycheckers flymake
+						 flymake-css flymake-eslint flymake-flycheck
+						 flymake-go flymake-go-staticcheck flymake-golangci
+						 flymake-jslint flymake-json flymake-python-pyflakes
+						 flymake-shell flymake-shellcheck flyspell-correct
+						 flyspell-correct-ivy fontawesome flymake-yaml
+						 flymake-solidity company-solidity solidity-mode
+						 flycheck evil-nerd-commenter typescript-mode
+						 prettier-js google-c-style ccls elisp-format
+						 company-box company which-key use-package
+						 rainbow-delimiters no-littering magit lsp-ui
+						 lsp-ivy ivy-rich helpful general evil-collection
+						 doom-themes doom-modeline dap-mode
+						 counsel-projectile command-log-mode
+						 auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
