@@ -25,7 +25,7 @@ CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # set LS_COLORS
-LS_COLORS=$(vivid generate jellybeans)
+export LS_COLORS=$(vivid generate jellybeans)
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
