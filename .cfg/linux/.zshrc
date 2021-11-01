@@ -3,11 +3,7 @@ export TERM=xterm-256color
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_DISABLE_COMPFIX=true
 export GOPATH=$HOME/go
-
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPATH/bin:/usr/bin:$PATH
-
-#export DOCKER_HOST=tcp://localhost:2375
-
 export EDITOR='emacsclient -s workspace -c'
 export VISUAL='emacsclient -s workspace -c'
 export ALTERNATE_EDITOR=''
@@ -29,7 +25,7 @@ CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # set LS_COLORS
-#eval `dircolors ~/.cfg/linux/.dircolors`
+LS_COLORS=$(vivid generate jellybeans)
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -45,8 +41,6 @@ if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
 fi
 
 xrdb ~/.Xresources
-
-
 
 function greet() {
 	figlet -tkc -w 100 -f ivrit "playground"; figlet -tk -f script "welcome to playground"; figlet -tkc -w 100 -f standard $USER; screenfetch
