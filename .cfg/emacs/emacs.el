@@ -383,7 +383,6 @@
 ;; TypeScript
 (use-package 
   prettier-js 
-
   :delight 
   :custom (prettier-js-args '("--print-width" "100" "--single-quote" "true" "--trailing-comma"
 			      "all")))
@@ -402,6 +401,7 @@
 (use-package 
   solidity-mode 
   :config (setq solidity-comment-style 'slash) 
+  :config (setq solidity-solium-path '/home/lefteris/.npm-global/bin/solium) 
   :config (setq solidity-solc-path '/usr/bin/solcjs))
 ;; TODO: need to add a conditional here to set a path for windows
 
