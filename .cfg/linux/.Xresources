@@ -9,7 +9,7 @@ URxvt*scrollWithBuffer: true
 URxvt*scrollRtyKeypress: true
 
 ! font
-URxvt.font: xft:Fira Code Retina:style=Retina:pixelsize=11
+URxvt.font: xft:Fira Code Retina:style=Retina:pixelsize=20
 URxvt.boldFont: xft:Fira Code:style=Bold:pixelsize=11
 URxvt.italicFont: xft:Fira Code:style=Light:pixelsize=11
 
