@@ -15,7 +15,7 @@
 (setq user-emacs-directory "~/.cache/emacs")
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar runemacs/default-font-size 180)
+(defvar runemacs/default-font-size 100)
 ;; (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
@@ -43,7 +43,7 @@
 ;; Set up the visible bell
 (setq visible-bell t)
 
-;;(set-face-attribute 'default nil :font "Fira Code Retina" :height runemacs/default-font-size)
+(set-face-attribute 'default nil :font "Fira Code Retina" :height runemacs/default-font-size)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -325,8 +325,6 @@
 ;; (dap-go-setup)
 ;; (require 'dap-chrome)
 ;; (dap-chrome-setup)
-(require 'dap-node)
-(dap-node-setup)
 
 ;; Company
 (use-package 
@@ -415,17 +413,3 @@
 (use-package 
     rainbow-delimiters 
   :hook (prog-mode . rainbow-delimiters-mode))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(helm-minibuffer-history-key "M-p")
- '(package-selected-packages
-   '(breadcrumb solidity-flycheck flycheck-clang-analyzer flycheck-clang-tidy flycheck-clangcheck flycheck-color-mode-line flycheck-golangci-lint flycheck-gometalinter flycheck-google-cpplint flycheck-pycheckers flymake flymake-css flymake-eslint flymake-flycheck flymake-go flymake-go-staticcheck flymake-golangci flymake-jslint flymake-json flymake-python-pyflakes flymake-shell flymake-shellcheck flyspell-correct flyspell-correct-ivy fontawesome flymake-yaml flymake-solidity company-solidity solidity-mode flycheck evil-nerd-commenter typescript-mode prettier-js google-c-style ccls elisp-format company-box company which-key use-package rainbow-delimiters no-littering magit lsp-ui lsp-ivy ivy-rich helpful general evil-collection doom-themes doom-modeline dap-mode counsel-projectile command-log-mode auto-package-update)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

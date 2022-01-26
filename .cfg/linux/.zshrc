@@ -18,6 +18,8 @@ alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/se
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
+source $ZSH/oh-my-zsh.sh
+
 # use case-sensitive completion.
 CASE_SENSITIVE="true"
 
@@ -33,8 +35,6 @@ export LS_COLORS=$(vivid generate jellybeans)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
 
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
 	exec startx
