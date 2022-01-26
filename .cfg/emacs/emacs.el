@@ -14,9 +14,12 @@
 ;; reliably, set `user-emacs-directory` before loading no-littering!
 (setq user-emacs-directory "~/.cache/emacs")
 
+(setq device (getenv "PLAYGROUND_DEVICE"))
+
 ;; You will most likely need to adjust this font size for your system!
 (defvar runemacs/default-font-size 100)
 ;; (defvar efs/default-variable-font-size 180)
+(if (eq device "hackbox") ((defvar runemacs/default-font-size 150)))
 
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(98. 98))
