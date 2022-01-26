@@ -10,8 +10,13 @@ URxvt*scrollRtyKeypress: true
 
 ! font
 URxvt.font: xft:Fira Code Retina:style=Retina:pixelsize=20
-URxvt.boldFont: xft:Fira Code:style=Bold:pixelsize=11
-URxvt.italicFont: xft:Fira Code:style=Light:pixelsize=11
+URxvt.boldFont: xft:Fira Code:style=Bold:pixelsize=20
+URxvt.italicFont: xft:Fira Code:style=Light:pixelsize=20
+
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
 ! special
 *.foreground:   #c5c8c6

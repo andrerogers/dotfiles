@@ -169,10 +169,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you want to logout off yo
 mode "shutdown" {
         bindsym 1 exec /home/sensei-dre/.lock.sh 1; exec killall i3-nagbar # lock
         bindsym 2 exec /home/sensei-dre/.lock.sh 2; exec killall i3-nagbar # suspend
-        bindsym 3 exec killall i3-nagbar; restart
+        bindsym 3 exec sudo reboot 
         bindsym 4 reload; exec killall i3-nagbar
         bindsym 5 exit
-        bindsym 6 exec shutdown now 
+        bindsym 6 exec sudo shutdown now 
 
         # back to normal: Enter or Escape or Ctrl+$mod+r
         bindsym Return mode "default"; exec killall i3-nagbar
