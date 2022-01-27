@@ -311,12 +311,19 @@
 ;; DAP Mode
 (use-package 
     dap-mode
-    :custom (lsp-enable-dap-auto-configure nil) 
-    :config (dap-ui-mode 1) 
+    ;; :custom (lsp-enable-dap-auto-configure nil) 
+    ;; :config (dap-ui-mode 1) 
     :config (dap-tooltip-mode 1) 
     :config (tooltip-mode 1) 
     :config (dap-ui-controls-mode 1) 
     :commands dap-debug 
+    :config
+    (require 'dap-node)
+    (dap-node-setup) ;; Automatically installs Node debug adapter if needed
+    (dap-register-debug-template "Node Inspector::Attach" (list: :type "node"
+							  :request "attach"
+							  :port: 9229
+							  :name "Node Inspector::Attach"))
     :config
     (general-define-key :keymaps 'lsp-mode-map 
 	      :prefix lsp-keymap-prefix 

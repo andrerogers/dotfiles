@@ -1,23 +1,25 @@
-export LANG=en_US.UTF-8
-export TERM=xterm-256color
-export ZSH=$HOME/.oh-my-zsh
-export ZSH_DISABLE_COMPFIX=true
 export GOPATH=$HOME/go
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPATH/bin:/usr/bin:$PATH
-export EDITOR='emacsclient -s workspace -c'
-export VISUAL='emacsclient -s workspace -c'
-export ALTERNATE_EDITOR=''
+
+alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/sensei-dre"
+
+export LANG=en_US.UTF-8
+export TERM=xterm-256color
+
+alias emacsctl="bash $HOME/.emacsctl.sh"
+export EDITOR='emacsclient --tty'
+export VISUAL='emacsclient -c'
+export ALTERNATE_EDITOR='emacsclient --tty'
+
+alias l="ls -latr"
+alias c="clear"
 
 alias clang="clang-9"
 alias clang++="clang++-9"
-alias l="ls -latr"
-alias c="clear"
-alias es='emacs --daemon=workspace'
-alias e='emacsclient -s workspace -c'
-alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/sensei-dre"
 
+export ZSH=$HOME/.oh-my-zsh
+export ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel9k/powerlevel9k"
-
 source $ZSH/oh-my-zsh.sh
 
 # use case-sensitive completion.
