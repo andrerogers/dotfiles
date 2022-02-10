@@ -6,6 +6,7 @@ help() {
 	echo "Emacs Controller"
 	echo "----------------"
 	echo -ne "create\t\tcreate server\n"
+	echo -ne "session\t\tcreate a server session\n"
 	echo -ne "list\t\tview active servers\n"
 	echo -ne "kill\t\tkill an active server\n"
 	echo -ne "kill-all\tkill all active servers"

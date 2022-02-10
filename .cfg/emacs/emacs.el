@@ -17,9 +17,12 @@
 (setq device (getenv "PLAYGROUND_DEVICE"))
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar runemacs/default-font-size 100)
+(defvar runemacs/default-font-size 140)
 ;; (defvar efs/default-variable-font-size 180)
-(if (eq device "hackbox") ((defvar runemacs/default-font-size 150)))
+(if (eq device "hackbox") 
+    ((defvar 
+       runemacs/default-font-size
+       140)))
 
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(98. 98))
@@ -46,7 +49,9 @@
 ;; Set up the visible bell
 (setq visible-bell t)
 
-(set-face-attribute 'default nil :font "Fira Code Retina" :height runemacs/default-font-size)
+(set-face-attribute 'default nil 
+		    :font "Fira Code Retina" 
+		    :height runemacs/default-font-size)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -112,7 +117,7 @@
 
 ;; Auto update packages
 (use-package 
-    auto-package-update 
+  auto-package-update 
   :custom (auto-package-update-interval 7) 
   (auto-package-update-prompt-before-update t) 
   (auto-package-update-hide-results t) 
@@ -129,17 +134,18 @@
 
 
 (use-package 
-    no-littering)
+  no-littering)
 
 					; no-littering doesn't set this by default so we must place
 ;; auto save files in the same path as it uses for sessions
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
 (use-package 
-    command-log-mode)
+  command-log-mode)
 
 (use-package 
-    ivy
+  ivy 
+
   :diminish 
   :bind (("C-s" . swiper) :map ivy-minibuffer-map ("TAB" . ivy-alt-done) 
 	 ("C-l" . ivy-alt-done) 
@@ -158,41 +164,41 @@
 ;;
 ;; M-x all-the-icons-install-fonts
 
-(use-package 
-    all-the-icons)
+(use-package all-the-icons
+  :if (display-graphic-p))
 
 (use-package 
-    doom-modeline 
+  doom-modeline 
   :init (doom-modeline-mode 1) 
   :custom ((doom-modeline-height 15)))
 
 (use-package 
-    doom-themes 
+  doom-themes 
   :init (load-theme 'doom-tomorrow-night t))
 
 (use-package 
-    rainbow-delimiters 
+  rainbow-delimiters 
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package 
-    which-key 
+  which-key 
   :init (which-key-mode) 
   :diminish which-key-mode 
   :config (setq which-key-idle-delay 1))
 
 (use-package 
-    ivy-rich 
+  ivy-rich 
   :init (setq ivy-rich-mode 1))
 
 (use-package 
-    counsel 
+  counsel 
   :bind (("M-x" . counsel-M-x) 
 	 ("C-x b" . counsel-ibuffer) 
 	 ("C-x C-f" . counsel-find-file) 
 	 :map minibuffer-local-map ("C-r" . 'counsel-minibuffer-history)))
 
 (use-package 
-    helpful 
+  helpful 
   :custom (counsel-describe-function-function #'helpful-callable) 
   (counsel-describe-variable-function #'helpful-variable) 
   :bind ([remap describe-function] . counsel-describe-function) 
@@ -201,7 +207,7 @@
   ([remap describe-key] . helpful-key))
 
 (use-package 
-    general 
+  general 
   :config (general-create-definer rune/leader-keys 
 	    :keymaps '(normal insert visual emacs) 
 	    :prefix "SPC" 
@@ -212,7 +218,7 @@
     "tt" '(counsel-load-theme :which-key "choose theme")))
 
 (use-package 
-    evil 
+  evil 
   :init (setq evil-want-integration t) 
   (setq evil-want-keybinding nil) 
   (setq evil-want-C-u-scroll t) 
@@ -228,12 +234,12 @@
   (evil-set-initial-state 'dashboard-mode 'normal))
 
 (use-package 
-    evil-collection 
+  evil-collection 
   :after evil 
   :config (evil-collection-init))
 
 (use-package 
-    hydra)
+  hydra)
 
 (defhydra hydra-text-scale 
   (:timeout 4)
@@ -245,7 +251,7 @@
 (rune/leader-keys "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 (use-package 
-    projectile 
+  projectile 
   :diminish projectile-mode 
   :config (projectile-mode) 
   :custom ((projectile-completion-system 'ivy)) 
@@ -257,7 +263,7 @@
   (setq projectile-switch-project-action #'projectile-dired))
 
 (use-package 
-    counsel-projectile 
+  counsel-projectile 
   :config (counsel-projectile-mode))
 
 (setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
@@ -265,7 +271,7 @@
 (global-set-key "\eS" 'counsel-rg)
 
 (use-package 
-    magit 
+  magit 
   :custom (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; TODO
@@ -279,66 +285,93 @@
 
 ;; (use-package breadcrumb)
 
-(defun efs/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+(defun efs/lsp-mode-setup () 
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols)) 
   (lsp-headerline-breadcrumb-mode))
 
 (use-package 
-    lsp-mode 
+  lsp-mode 
   :commands (lsp lsp-deferred) 
   :hook (lsp-mode . efs/lsp-mode-setup) 
-  :hook ((c-mode c++-mode json-mode python-mode tex-mode typescript-mode xml-mode go-mode) . lsp) 
+  :hook ((c-mode c++-mode json-mode python-mode tex-mode typescript-mode xml-mode go-mode
+		 rust-mode-hook rustic-mode-hook) . lsp) 
   :init (setq lsp-keymap-prefix "C-c l") ;; Or 'C-l', 's-l'
-  :config (lsp-enable-which-key-integration t))
+  :config (lsp-enable-which-key-integration t) 
+  :custom
+  ;; what to use when checking on-save. "check" is default, I prefer clippy
+  (lsp-rust-analyzer-cargo-watch-command "clippy") 
+  (lsp-eldoc-render-all t) 
+  (lsp-idle-delay 0.6) 
+  (lsp-rust-analyzer-server-display-inlay-hints t) 
+  :config (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (use-package 
-    lsp-ui 
+  lsp-ui 
+
+  :ensure 
+  :commands lsp-ui-mode 
+  :custom (lsp-ui-peek-always-show t) 
+  (lsp-ui-sideline-show-hover t) 
+  (lsp-ui-doc-enable nil) 
   :hook (lsp-mode . lsp-ui-mode) 
   :custom (lsp-ui-doc-position 'bottom))
 
 (use-package 
-    lsp-treemacs 
+  lsp-treemacs 
   :after lsp)
 
 (use-package 
-    lsp-ivy)
+  lsp-ivy)
 
 (defun format-buffer () 
   (interactive) 
   (lsp-format-buffer))
 (define-key global-map "\eF" 'format-buffer)
 
+(use-package 
+  exec-path-from-shell 
+
+  :ensure 
+  :init (exec-path-from-shell-initialize))
+
 ;; DAP Mode
 (use-package 
-    dap-mode
-    ;; :custom (lsp-enable-dap-auto-configure nil) 
-    ;; :config (dap-ui-mode 1) 
-    :config (dap-tooltip-mode 1) 
-    :config (tooltip-mode 1) 
-    :config (dap-ui-controls-mode 1) 
-    :commands dap-debug 
-    :config
-    (require 'dap-node)
-    (dap-node-setup) ;; Automatically installs Node debug adapter if needed
-    (dap-register-debug-template "Node Inspector::Attach" (list: :type "node"
-							  :request "attach"
-							  :port: 9229
-							  :name "Node Inspector::Attach"))
-    :config
-    (general-define-key :keymaps 'lsp-mode-map 
-	      :prefix lsp-keymap-prefix 
-		      "d" '(dap-hydra t 
-				      :wk "debugger")))
+  dap-mode
+  ;; :custom (lsp-enable-dap-auto-configure nil)
+  :config (dap-ui-mode) 
+  :config (dap-tooltip-mode 1) 
+  :config (tooltip-mode 1) 
+  :config (dap-ui-controls-mode 1) 
+  :commands dap-debug 
+  :config (require 'dap-lldb) 
+  :config (require 'dap-gdb-lldb) 
+  (dap-gdb-lldb-setup) 
+  :config (require 'dap-cpptools) 
+  :config (require 'dap-node) 
+  (dap-node-setup) ;; Automatically installs Node debug adapter if needed
+  (dap-register-debug-template "Rust::LLDB Run Configuration" (list :type "lldb" 
+								    :request "launch" 
+								    :name "LLDB::Run" 
+								    :gdbpath "rust-lldb" 
+								    :target nil 
+								    :cwd nil)) 
+  ;; (dap-register-debug-template "Node Inspector::Attach" (list: :type "node" 
+  ;; 							       :request "attach" 
+  ;; 							       :port: 9229 
+  ;; 							       :name "Node Inspector::Attach")) 
+  :config (general-define-key :keymaps 'lsp-mode-map 
+			      :prefix lsp-keymap-prefix 
+			      "d" '(dap-hydra t 
+					      :wk "debugger")))
+
 
 ;; (require 'dap-lldb)
 ;; (require 'dap-go)
 ;; (dap-go-setup)
 ;; (require 'dap-chrome)
-;; (dap-chrome-setup)
-
-;; Company
+;; (dap-chrome-setup
 (use-package 
-    company 
+  company 
   :after lsp-mode 
   :ensure t 
   :hook (lsp-mode . company-mode) 
@@ -350,7 +383,7 @@
   (company-idle-delay 0.0))
 
 (use-package 
-    company-box 
+  company-box 
   :after company 
   :hook (company-mode . company-box-mode))
 
@@ -360,47 +393,68 @@
 
 ;; Languages
 (use-package 
-    flycheck 
+  flycheck 
   :ensure t 
   :init (global-flycheck-mode))
 
 (use-package 
-    flymake-shellcheck 
+  flymake-shellcheck 
   :commands flymake-shellcheck-load 
   :init (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
 
 ;; Elisp
 (use-package 
-    elisp-format)
+  elisp-format)
 
 ;; C/C++
 (use-package 
-    cc-mode)
-(use-package 
-    ccls 
-  :after projectile
-  ;;:ensure-system-package ccls
-  :custom (ccls-args nil) 
-  (ccls-executable (executable-find "ccls")) 
-  (projectile-project-root-files-top-down-recurring (append '("compile_commands.json" ".ccls")
-							    projectile-project-root-files-top-down-recurring)) 
-  :config (add-to-list 'projectile-globally-ignored-directories ".ccls-cache"))
+  cc-mode)
 
 (use-package 
-    google-c-style 
+  google-c-style 
   :hook (((c-mode c++-mode) . google-set-c-style) 
 	 (c-mode-common . google-make-newline-indent)))
 
 ;; TypeScript
 (use-package 
-    prettier-js
+  prettier-js 
+
   :delight 
   :custom (prettier-js-args '("--print-width" "100" "--single-quote" "true" "--trailing-comma"
 			      "all")))
 
 (use-package 
-    typescript-mode 
-  :mode ("\\.ts\\'" "\\.tsx\\'") 
+  rustic 
+  :ensure 
+  :bind (:map rustic-mode-map
+	      ("M-j" . lsp-ui-imenu) 
+	      ("M-?" . lsp-find-references) 
+	      ("C-c C-c l" . flycheck-list-errors) 
+	      ("C-c C-c a" . lsp-execute-code-action) 
+	      ("C-c C-c r" . lsp-rename) 
+	      ("C-c C-c q" . lsp-workspace-restart) 
+	      ("C-c C-c Q" . lsp-workspace-shutdown) 
+	      ("C-c C-c s" . lsp-rust-analyzer-status)) 
+  :config
+  ;; uncomment for less flashiness
+  ;; (setq lsp-eldoc-hook nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
+
+  ;; comment to disable rustfmt on save
+  (setq rustic-format-on-save t) 
+  (add-hook 'rustic-mode-hook 'ar/rustic-mode-hook))
+
+(defun ar/rustic-mode-hook ()
+  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+  ;; save rust buffers that are not file visiting. Once
+  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+  ;; no longer be necessary.
+  (when buffer-file-name (setq-local buffer-save-without-query t)))
+
+(use-package 
+  typescript-mode 
+  :mode ("\\.ts\\'" "\\.tsx\\'" "\\.js\\'") 
   :hook (typescript-mode . lsp-deferred) 
   :hook (typescript-mode . prettier-js-mode) 
   :custom (add-hook 'typescript-mode-hook #'(lambda () 
@@ -410,16 +464,29 @@
 
 ;; Solidity
 (use-package 
-    solidity-mode 
+  solidity-mode 
   :config (setq solidity-comment-style 'slash) 
   :config (setq solidity-solium-path '/usr/bin/solium) 
   :config (setq solidity-solc-path '/usr/bin/solcjs))
 ;; TODO: need to add a conditional here to set a path for windows
 
 (use-package 
-    evil-nerd-commenter 
+  evil-nerd-commenter 
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
 (use-package 
-    rainbow-delimiters 
+  rainbow-delimiters 
   :hook (prog-mode . rainbow-delimiters-mode))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
