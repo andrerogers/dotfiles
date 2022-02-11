@@ -17,7 +17,7 @@
 (setq device (getenv "PLAYGROUND_DEVICE"))
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar runemacs/default-font-size 140)
+(defvar runemacs/default-font-size 100)
 ;; (defvar efs/default-variable-font-size 180)
 (if (eq device "hackbox") 
     ((defvar 
