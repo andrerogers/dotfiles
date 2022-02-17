@@ -18,9 +18,6 @@ export ALTERNATE_EDITOR='emacsclient --tty'
 alias l="ls -latr"
 alias c="clear"
 
-alias clang="clang-9"
-alias clang++="clang++-9"
-
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel9k/powerlevel9k"
