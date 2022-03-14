@@ -337,17 +337,18 @@
 ;; DAP Mode
 (use-package 
   dap-mode
-  ;; :custom (lsp-enable-dap-auto-configure nil)
-  :config (dap-ui-mode) 
-  :config (dap-tooltip-mode 1) 
-  :config (tooltip-mode 1) 
-  :config (dap-ui-controls-mode 1) 
   :commands dap-debug 
-  :config (require 'dap-lldb) 
-  :config (require 'dap-gdb-lldb) 
+  :custom (lsp-enable-dap-auto-configure nil)
+  :config
+  (dap-ui-mode) 
+  (dap-tooltip-mode 1) 
+  (tooltip-mode 1) 
+  (dap-ui-controls-mode 1) 
+  (require 'dap-cpptools) 
+  (require 'dap-node) 
+  (require 'dap-lldb) 
+  (require 'dap-gdb-lldb) 
   (dap-gdb-lldb-setup) 
-  :config (require 'dap-cpptools) 
-  :config (require 'dap-node) 
   (dap-node-setup) ;; Automatically installs Node debug adapter if needed
   (dap-register-debug-template "Rust::LLDB Run Configuration" (list :type "lldb" 
 								    :request "launch" 
@@ -355,11 +356,11 @@
 								    :gdbpath "rust-lldb" 
 								    :target nil 
 								    :cwd nil)) 
-  ;; (dap-register-debug-template "Node Inspector::Attach" (list: :type "node" 
-  ;; 							       :request "attach" 
-  ;; 							       :port: 9229 
-  ;; 							       :name "Node Inspector::Attach")) 
-  :config (general-define-key :keymaps 'lsp-mode-map 
+  (dap-register-debug-template "Node Inspector::Attach" (list: :type "node" 
+							       :request "attach" 
+							       :port: 9229 
+							       :name "Node Inspector::Attach")) 
+  (general-define-key :keymaps 'lsp-mode-map 
 			      :prefix lsp-keymap-prefix 
 			      "d" '(dap-hydra t 
 					      :wk "debugger")))

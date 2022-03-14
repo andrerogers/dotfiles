@@ -2,7 +2,8 @@ export GOPATH=$HOME/go
 export DENO_INSTALL="/home/sensei-dre/.deno"
 export TOOLS=$HOME/tools
 export LLVM_BIN=$TOOLS/llvm-project/build/bin
-export SOLANA_BIN=$HOME/.local/share/solana/install/active_release/bin
+#export SOLANA_BIN=$HOME/.local/share/solana/install/active_release/bin
+export SOLANA_BIN=$HOME/tools/solana/target/release
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.anaconda3/bin:$GOPATH/bin:/usr/bin:$DENO_INSTALL/bin:$LLVM_BIN:$SOLANA_BIN:$PATH
 
 alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/sensei-dre"
