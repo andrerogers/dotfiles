@@ -17,7 +17,7 @@
 (setq device (getenv "PLAYGROUND_DEVICE"))
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar runemacs/default-font-size 140)
+(defvar runemacs/default-font-size 100)
 ;; (defvar efs/default-variable-font-size 180)
 (if (eq device "hackbox") 
     ((defvar 
@@ -164,7 +164,8 @@
 ;;
 ;; M-x all-the-icons-install-fonts
 
-(use-package all-the-icons
+(use-package 
+  all-the-icons 
   :if (display-graphic-p))
 
 (use-package 
@@ -336,18 +337,20 @@
 
 ;; DAP Mode
 (use-package 
-  dap-mode
-  ;; :custom (lsp-enable-dap-auto-configure nil)
-  :config (dap-ui-mode) 
-  :config (dap-tooltip-mode 1) 
-  :config (tooltip-mode 1) 
-  :config (dap-ui-controls-mode 1) 
+  dap-mode 
   :commands dap-debug 
-  :config (require 'dap-lldb) 
-  :config (require 'dap-gdb-lldb) 
+  :custom (lsp-enable-dap-auto-configure nil) 
+  :config (dap-ui-mode) 
+  (dap-tooltip-mode 1) 
+  (tooltip-mode 1) 
+  (dap-ui-controls-mode 1) 
+  (require 'dap-cpptools) 
+  (require 'dap-node) 
+  (require 'dap-lldb) 
+  (require 'dap-gdb-lldb) 
+  (require 'dap-dlv-go) 
+  (dap-go-setup) 
   (dap-gdb-lldb-setup) 
-  :config (require 'dap-cpptools) 
-  :config (require 'dap-node) 
   (dap-node-setup) ;; Automatically installs Node debug adapter if needed
   (dap-register-debug-template "Rust::LLDB Run Configuration" (list :type "lldb" 
 								    :request "launch" 
@@ -355,19 +358,17 @@
 								    :gdbpath "rust-lldb" 
 								    :target nil 
 								    :cwd nil)) 
-  ;; (dap-register-debug-template "Node Inspector::Attach" (list: :type "node" 
-  ;; 							       :request "attach" 
-  ;; 							       :port: 9229 
-  ;; 							       :name "Node Inspector::Attach")) 
-  :config (general-define-key :keymaps 'lsp-mode-map 
-			      :prefix lsp-keymap-prefix 
-			      "d" '(dap-hydra t 
-					      :wk "debugger")))
+  (dap-register-debug-template "Node Inspector::Attach" (list: :type "node" 
+							       :request "attach" 
+							       :port: 9229 
+							       :name "Node Inspector::Attach")) 
+  (general-define-key :keymaps 'lsp-mode-map 
+		      :prefix lsp-keymap-prefix 
+		      "d" '(dap-hydra t 
+				      :wk "debugger")))
 
 
 ;; (require 'dap-lldb)
-;; (require 'dap-go)
-;; (dap-go-setup)
 ;; (require 'dap-chrome)
 ;; (dap-chrome-setup
 (use-package 
@@ -406,6 +407,20 @@
 (use-package 
   elisp-format)
 
+;; Go - lsp-mode
+(defun lsp-go-install-save-hooks () 
+  (add-hook 'before-save-hook #'lsp-format-buffer t t) 
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(use-package 
+  go-mode 
+  :config
+  ;; Start LSP Mode and YASnippet mode
+  (add-hook 'go-mode-hook 'lsp-deferred) 
+  (add-hook 'go-mode-hook (lambda () 
+			    (add-hook 'before-save-hook 'lsp-go-install-save-hooks))))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
 ;; C/C++
 (use-package 
   cc-mode)
@@ -424,7 +439,7 @@
 			      "all")))
 
 (use-package 
-  rustic 
+  rustic
   :ensure 
   :bind (:map rustic-mode-map
 	      ("M-j" . lsp-ui-imenu) 
