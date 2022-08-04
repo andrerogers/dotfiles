@@ -11,6 +11,7 @@ export LANG=en_US.UTF-8
 export TERM=xterm-256color
 
 alias emacsctl="bash $HOME/.emacsctl.sh"
+alias notion="bash $HOME/.notion.sh"
 export EDITOR='emacsclient --tty'
 export VISUAL='emacsclient -c'
 export ALTERNATE_EDITOR='emacsclient --tty'
