@@ -164,7 +164,8 @@
 ;;
 ;; M-x all-the-icons-install-fonts
 
-(use-package all-the-icons
+(use-package 
+  all-the-icons 
   :if (display-graphic-p))
 
 (use-package 
@@ -336,11 +337,10 @@
 
 ;; DAP Mode
 (use-package 
-  dap-mode
+  dap-mode 
   :commands dap-debug 
-  :custom (lsp-enable-dap-auto-configure nil)
-  :config
-  (dap-ui-mode) 
+  :custom (lsp-enable-dap-auto-configure nil) 
+  :config (dap-ui-mode) 
   (dap-tooltip-mode 1) 
   (tooltip-mode 1) 
   (dap-ui-controls-mode 1) 
@@ -348,6 +348,8 @@
   (require 'dap-node) 
   (require 'dap-lldb) 
   (require 'dap-gdb-lldb) 
+  (require 'dap-dlv-go) 
+  (dap-go-setup) 
   (dap-gdb-lldb-setup) 
   (dap-node-setup) ;; Automatically installs Node debug adapter if needed
   (dap-register-debug-template "Rust::LLDB Run Configuration" (list :type "lldb" 
@@ -361,14 +363,12 @@
 							       :port: 9229 
 							       :name "Node Inspector::Attach")) 
   (general-define-key :keymaps 'lsp-mode-map 
-			      :prefix lsp-keymap-prefix 
-			      "d" '(dap-hydra t 
-					      :wk "debugger")))
+		      :prefix lsp-keymap-prefix 
+		      "d" '(dap-hydra t 
+				      :wk "debugger")))
 
 
 ;; (require 'dap-lldb)
-;; (require 'dap-go)
-;; (dap-go-setup)
 ;; (require 'dap-chrome)
 ;; (dap-chrome-setup
 (use-package 
@@ -407,6 +407,20 @@
 (use-package 
   elisp-format)
 
+;; Go - lsp-mode
+(defun lsp-go-install-save-hooks () 
+  (add-hook 'before-save-hook #'lsp-format-buffer t t) 
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(use-package 
+  go-mode 
+  :config
+  ;; Start LSP Mode and YASnippet mode
+  (add-hook 'go-mode-hook 'lsp-deferred) 
+  (add-hook 'go-mode-hook (lambda () 
+			    (add-hook 'before-save-hook 'lsp-go-install-save-hooks))))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
 ;; C/C++
 (use-package 
   cc-mode)
@@ -425,7 +439,7 @@
 			      "all")))
 
 (use-package 
-  rustic 
+  rustic
   :ensure 
   :bind (:map rustic-mode-map
 	      ("M-j" . lsp-ui-imenu) 
