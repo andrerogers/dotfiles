@@ -50,8 +50,8 @@ function greet() {
 	figlet -tkc -w 100 -f ivrit "playground"; figlet -tk -f script "welcome to playground"; figlet -tkc -w 100 -f standard $USER; screenfetch
 }
 
-[ -f $HOME/runit.sh ] && bash $HOME/runit.sh || greet  # DO NOT REMOVE, must always be the last line
-
 source $HOME/.cargo/env
 
 source $HOME/.device
+
+[ -f $HOME/runit.sh ] && bash $HOME/runit.sh || greet  # DO NOT REMOVE, must always be the last line
