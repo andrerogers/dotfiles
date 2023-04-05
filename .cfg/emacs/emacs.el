@@ -349,6 +349,8 @@
   (require 'dap-lldb) 
   (require 'dap-gdb-lldb) 
   (require 'dap-dlv-go) 
+  (require 'dap-python)
+  (setq dap-python-debugger 'debugpy)
   (dap-go-setup) 
   (dap-gdb-lldb-setup) 
   (dap-node-setup) ;; Automatically installs Node debug adapter if needed
@@ -398,6 +400,12 @@
   :ensure t 
   :init (global-flycheck-mode))
 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode))
+  :init (setq markdown-command "/usr/bin/multimarkdown"))
+
 (use-package 
   flymake-shellcheck 
   :commands flymake-shellcheck-load 
@@ -420,6 +428,12 @@
   (add-hook 'go-mode-hook (lambda () 
 			    (add-hook 'before-save-hook 'lsp-go-install-save-hooks))))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+(use-package conda
+  :ensure t
+  :init
+  (setq conda-anaconda-home (expand-file-name "~/miniconda3"))
+  (setq conda-env-home-directory (expand-file-name "~/miniconda3")))
 
 ;; C/C++
 (use-package 
@@ -498,7 +512,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
+   '(markdown-preview-mode rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -6,7 +6,7 @@
 
 =head1 NAME
 
-searchable-scrollback - incremental scrollback search (enabled by default)
+searchable-scrollback - incremental scrollback search
 
 =head1 DESCRIPTION
 
@@ -18,7 +18,7 @@ suspended and a regex is displayed at the bottom of the screen.
 Inputting characters appends them to the regex and continues incremental
 search. In addition, the following bindings are recognized:
 
-=over 4
+=over
 
 =item C<BackSpace>
 
@@ -168,7 +168,7 @@ sub search {
             } while $text =~ /$re/g;
 
             $self->{row} = $row;
-            $self->view_start (List::Util::min 0, $row - ($self->nrow >> 1));
+            $self->view_start ($row - ($self->nrow >> 1));
             $self->want_refresh;
             return;
          }
@@ -223,10 +223,10 @@ sub key_press {
          if $line->end < $self->nrow;
    } elsif ($keysym == 0xff55) { # prior
       my $row = $self->view_start - ($self->nrow - 1);
-      $self->view_start (List::Util::min 0, $row);
+      $self->view_start ($row);
    } elsif ($keysym == 0xff56) { # next
       my $row = $self->view_start + ($self->nrow - 1);
-      $self->view_start (List::Util::min 0, $row);
+      $self->view_start ($row);
    } elsif ($keysym == 0xff63) { # insert
       $self->selection_request (urxvt::CurrentTime, 1);
    } elsif ($keysym == 0xff08) { # backspace

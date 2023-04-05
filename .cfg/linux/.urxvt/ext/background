@@ -13,6 +13,8 @@
 #:META:RESOURCE:shading:number:shade background by number %
 #:META:RESOURCE:blr:HxV:gaussian-blur background with radii
 #:META:RESOURCE:blurRadius:HxV:gaussian-blur background with radii
+#:META:OSC:20:change/query background image
+#:META:OSC:705:change transparent background tint colour
 
 =head1 NAME
 
@@ -261,7 +263,7 @@ C<load> it can reuse that in-memory copy.
 
 =head2 COMMAND LINE SWITCHES
 
-=over 4
+=over
 
 =item --background-expr perl-expression
 
@@ -312,7 +314,7 @@ These functions provide an image, by loading it from disk, grabbing it
 from the root screen or by simply generating it. They are used as starting
 points to get an image you can play with.
 
-=over 4
+=over
 
 =item load $path
 
@@ -441,7 +443,7 @@ images.
 The following operators modify the tiling mode of an image, that is, the
 way that pixels outside the image area are painted when the image is used.
 
-=over 4
+=over
 
 =item tile $img
 
@@ -526,7 +528,7 @@ varies. Most of them make your expression sensitive to some events, for
 example using C<TW> (terminal width) means your expression is evaluated
 again when the terminal is resized.
 
-=over 4
+=over
 
 =item TX
 
@@ -629,7 +631,7 @@ Like C<again>, but also returns an increasing counter value, starting at
 
 The following operators modify the shape, size or position of the image.
 
-=over 4
+=over
 
 =item clip $img
 
@@ -826,7 +828,7 @@ Example: rotate the image by 90 degrees around its center.
 
 The following operators change the pixels of the image.
 
-=over 4
+=over
 
 =item tint $color, $img
 
@@ -1001,7 +1003,7 @@ Example: do the right thing when focus fading is requested.
 Anything that didn't fit any of the other categories, even after applying
 force and closing our eyes.
 
-=over 4
+=over
 
 =item keep { ... }
 
@@ -1044,7 +1046,7 @@ B<deprecated> and will be removed in future versions.
 
 =head2 OPTIONS AND RESOURCES
 
-=over 4
+=over
 
 =item B<-pixmap> I<file[;oplist]>
 
@@ -1056,7 +1058,7 @@ Note that you may need to quote the C<;> character when using the
 command line option, as C<;> is usually a metacharacter in shells.
 Supported operations are:
 
-=over 4
+=over
 
 =item B<WxH+X+Y>
 
@@ -1083,7 +1085,7 @@ The default scale and position setting is C<100x100+50+50>.
 Alternatively, a predefined set of templates can be used to achieve
 the most common setups:
 
-=over 4
+=over
 
 =item B<style=tiled>
 
@@ -1158,7 +1160,7 @@ extension. One way to achieve that is to use the C<--background-expr ''>
 command line argument or by specifying an empty C<URxvt.background.expr:>>
 resource.
 
-=over 4
+=over
 
 =item B<< C<ESC ] 705 ; Pt ST> >> Change transparent background tint colour to B<< C<Pt> >>.
 
@@ -1166,7 +1168,7 @@ resource.
 parameters: the value of B<< C<Pt> >> can be one of the following
 commands:
 
-=over 4
+=over
 
 =item B<< C<?> >>
 
@@ -1322,7 +1324,7 @@ sub recalculate {
    $arg_self->{next_refresh} = urxvt::NOW + $MIN_INTERVAL;
 
    unless ($arg_self->has_render) {
-      warn "background extension needs RENDER extension 0.10 or higher, ignoring background-expr.\n";
+      warn "background extension needs RENDER extension 0.11 or higher, ignoring background-expr.\n";
       return;
    }
 
@@ -1347,7 +1349,7 @@ sub recalculate {
 
       my $img = urxvt::bgdsl::merge @img;
 
-      $frame->[FR_AGAIN]{size} = 1
+      $frame->[urxvt::bgdsl::FR_AGAIN]{size} = 1
          if $img->repeat_mode != urxvt::RepeatNormal;
 
       # if the expression is sensitive to external events, prepare reevaluation then
@@ -1535,34 +1537,6 @@ sub old_bg_expr {
    $expr
 }
 
-sub on_osc_seq {
-   my ($self, $op, $arg) = @_;
-
-   $self->{bg_opts} or return;
-
-   $op =~ /^(?:20|705)$/ or return;
-
-   if ($op eq "20") {
-      if ($arg eq "?") {
-         my $h_scale = $self->{bg_opts}->{h_scale};
-         my $v_scale = $self->{bg_opts}->{v_scale};
-         my $h_align = $self->{bg_opts}->{h_align};
-         my $v_align = $self->{bg_opts}->{v_align};
-         $self->cmd_parse ("\033]2;[${h_scale}x${v_scale}+${h_align}+${v_align}]\007");
-      } else {
-         $self->old_bg_opts ($arg);
-         my $expr = $self->old_bg_expr;
-         $self->set_expr (parse_expr $expr) if $expr;
-      }
-   } elsif ($op eq "705") {
-      $self->{bg_opts}->{tint} = $arg;
-      my $expr = $self->old_bg_expr;
-      $self->set_expr (parse_expr $expr) if $expr;
-   }
-
-   1
-}
-
 sub find_resource {
    my ($self, $res, $opt) = @_;
 
@@ -1572,7 +1546,7 @@ sub find_resource {
    $v
 }
 
-sub on_start {
+sub parse_bgopts {
    my ($self) = @_;
 
    my $expr = $self->x_resource ("%.expr");
@@ -1594,7 +1568,43 @@ sub on_start {
    $self->{border} = $self->x_resource_boolean ("%.border");
 
    $MIN_INTERVAL = $self->x_resource ("%.interval");
+}
+
+sub on_start {
+   my ($self) = @_;
+
+   $self->parse_bgopts;
 
    ()
+}
+
+sub on_osc_seq {
+   my ($self, $op, $arg) = @_;
+
+   $op eq "20" or $op eq "706"
+      or return;
+
+   $self->{bg_opts}
+      or $self->parse_bgopts;
+
+   if ($op eq "20") {
+      if ($arg eq "?") {
+         my $h_scale = $self->{bg_opts}{h_scale};
+         my $v_scale = $self->{bg_opts}{v_scale};
+         my $h_align = $self->{bg_opts}{h_align};
+         my $v_align = $self->{bg_opts}{v_align};
+         $self->cmd_parse ("\033]2;[${h_scale}x${v_scale}+${h_align}+${v_align}]\007");
+      } else {
+         $self->old_bg_opts ($arg);
+         my $expr = $self->old_bg_expr;
+         $self->set_expr (parse_expr $expr) if $expr;
+      }
+   } elsif ($op eq "705") {
+      $self->{bg_opts}{tint} = $arg;
+      my $expr = $self->old_bg_expr;
+      $self->set_expr (parse_expr $expr) if $expr;
+   }
+
+   1
 }
 
