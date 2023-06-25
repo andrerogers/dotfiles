@@ -27,6 +27,9 @@
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(98. 98))
 
+(set-face-attribute 'header-line nil :height 100)
+(set-face-attribute 'mode-line nil :height 100)
+
 ;; Set frame transparency
 (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
 (add-to-list 'default-frame-alist `(alpha . ,efs/frame-transparency))
@@ -511,8 +514,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
  '(package-selected-packages
-   '(markdown-preview-mode rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
+   '(smart-mode-line-atom-one-dark-theme markdown-preview-mode rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

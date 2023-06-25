@@ -124,9 +124,9 @@ bindsym $mod+a focus parent
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "scratch"
-set $ws2 "dev"
-set $ws3 "browse"
-set $ws4 "4"
+set $ws2 "dev-00"
+set $ws3 "dev-01"
+set $ws4 "browse"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
@@ -138,7 +138,7 @@ set $ws10 "10"
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace number $ws4
+bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace number $ws5
 bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
@@ -150,7 +150,7 @@ bindsym $mod+0 workspace number $ws10
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace number $ws5
 bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
