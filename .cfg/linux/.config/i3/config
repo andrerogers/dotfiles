@@ -222,3 +222,6 @@ bar {
 		urgent_workspace 	#3f3f3f #ff0000 #ffffff
 	}
 }
+
+bindsym $mod+greater move workspace to output right
+bindsym $mod+less move workspace to output left 

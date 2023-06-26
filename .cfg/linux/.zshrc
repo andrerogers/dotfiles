@@ -1,8 +1,3 @@
-# Prevent the system from going to sleep when idle
-xset s off
-xset -dpms
-xset s noblank
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -10,20 +5,26 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-#autoload compinit promptinit
+# Prevent the system from going to sleep when idle
+#xset s off
+#xset -dpms
+#xset s noblank
 
-export GOPATH=$HOME/go
+autoload compinit promptinit
+
+#export GOPATH=$HOME/go
 #export DENO_INSTALL="/home/sensei-dre/.deno"
 #export TOOLS=$HOME/tools
 #export LLVM_BIN=$TOOLS/llvm-project/build/bin
 #export SOLANA_BIN=$HOME/.local/share/solana/install/active_release/bin
 #export SOLANA_BIN=$HOME/tools/solana/target/release
-export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$GOPATH/bin:/usr/bin:$PATH
+#export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$GOPATH/bin:/usr/bin:$PATH
 
 alias config="/usr/bin/git --git-dir=/home/sensei-dre/.cfg/ --work-tree=/home/sensei-dre"
 alias ls="ls --color=auto"
+alias l="ls -la"
 alias c="clear"
-alias e="emacsctl.sh"
+alias e="~/.cfg/emacs/emacsctl.sh"
 
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
