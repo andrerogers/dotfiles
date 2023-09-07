@@ -7,6 +7,7 @@ help() {
 	echo "----------------"
 	echo -ne "create\t\tcreate server\n"
 	echo -ne "session\t\tcreate a server session\n"
+	echo -ne "ts\t\tcreate a server session in the terminal\n"
 	echo -ne "list\t\tview active servers\n"
 	echo -ne "kill\t\tkill an active server\n"
 	echo -ne "kill-all\tkill all active servers"
@@ -20,6 +21,12 @@ create_server() {
 start_session() {
 	echo "INFO: Attempting to create session for '$1' server!"
 	emacsclient -c -s $1 -n
+	echo "INFO: Created session for '$1' server!"
+}
+
+start_term_session() {
+	echo "INFO: Attempting to create session for '$1' server!"
+	emacsclient -c -s $1 -nw
 	echo "INFO: Created session for '$1' server!"
 }
 
@@ -81,6 +88,14 @@ case $1 in
 		fi
 
 		start_session $2
+		;;
+	ts)
+		if [[ -z "$2" ]]; then
+			echo "ERROR: pass a valid server name"
+			exit
+		fi
+
+		start_term_session $2
 		;;
 	kill)
 		if [[ -z "$2" ]]; then

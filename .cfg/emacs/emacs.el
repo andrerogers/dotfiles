@@ -104,7 +104,8 @@
 ;; Initialize package sources
 (require 'package)
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/") 
+(setq package-archives '(("melpa-stable" . "https://stable.melpa.org/packages/") 
+			 ("melpa" . "https://melpa.org/packages/") 
 			 ("org" . "https://orgmode.org/elpa/") 
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
@@ -494,13 +495,24 @@
 								   prettier-js-mode)))) 
   :config (setq typescript-indent-level 2))
 
-;; Solidity
-(use-package 
-  solidity-mode 
-  :config (setq solidity-comment-style 'slash) 
-  :config (setq solidity-solium-path '/usr/bin/solium) 
-  :config (setq solidity-solc-path '/usr/bin/solcjs))
-;; TODO: need to add a conditional here to set a path for windows
+;; Python
+;; (use-package elpy
+;;   :ensure t
+;;   :init
+;;   (elpy-enable))
+(use-package lsp-pyright
+  :hook (python-mode . (lambda () (require 'lsp-pyright)))
+  :init (when (executable-find "python3")
+          (setq lsp-pyright-python-executable-cmd "python3")))
+;; (use-package py-autopep8)
+;; (use-package blacken)
+;; Enable Flycheck
+;; (when (require 'flycheck nil t)
+;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; ;; Enable autopep8
+;; (require 'py-autopep8)
+;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 (use-package 
   evil-nerd-commenter 
@@ -517,7 +529,7 @@
  '(custom-safe-themes
    '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
  '(package-selected-packages
-   '(smart-mode-line-atom-one-dark-theme markdown-preview-mode rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
+   '(blacken py-autopep8 smart-mode-line-atom-one-dark-theme markdown-preview-mode rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

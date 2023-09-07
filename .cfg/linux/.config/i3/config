@@ -127,36 +127,50 @@ set $ws1 "scratch"
 set $ws2 "dev-00"
 set $ws3 "dev-01"
 set $ws4 "browse"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws5 "brain"
+set $ws6 "work"
+set $ws7 "misc"
+set $ws8 "scratch-00"
+set $ws9 "scratch-01"
+set $ws10 "scratch-02"
+
+workspace $ws1 output DP-4
+workspace $ws2 output DP-2
+workspace $ws3 output DP-2
+workspace $ws4 output DP-4
+workspace $ws5 output DP-2
+workspace $ws6 output DP-4
+workspace $ws7 output DP-4
+
+exec --no-startup-id i3-msg 'workspace $ws1; exec spotify-launcher;'
+exec --no-startup-id i3-msg 'workspace $ws2; exec urxvt;'
+exec --no-startup-id i3-msg 'workspace $ws3; exec urxvt;'
+exec --no-startup-id i3-msg 'workspace $ws4; exec brave;'
+exec --no-startup-id i3-msg 'workspace $ws5; exec obsidian; workspace $ws1'
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
 bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -167,12 +181,11 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you want to logout off yo
 
 # shutdown, restart, logout of system
 mode "shutdown" {
-        bindsym 1 exec /home/sensei-dre/.lock.sh 1; exec killall i3-nagbar # lock
-        bindsym 2 exec /home/sensei-dre/.lock.sh 2; exec killall i3-nagbar # suspend
-        bindsym 3 exec sudo reboot 
-        bindsym 4 reload; exec killall i3-nagbar
-        bindsym 5 exit
-        bindsym 6 exec sudo shutdown now 
+    	bindsym 1 exec "/path/to/i3-restore/i3-save && i3-msg exit"
+    	bindsym 2 exec "/path/to/i3-restore/i3-save && systemctl reboot"
+    	bindsym 3 exec systemctl hibernate
+    	bindsym 4 exec systemctl suspend
+        bindsym 5 exec sudo shutdown now 
 
         # back to normal: Enter or Escape or Ctrl+$mod+r
         bindsym Return mode "default"; exec killall i3-nagbar
@@ -181,7 +194,7 @@ mode "shutdown" {
 }
 
 # enter shutdown mode and cache lockscreen image
-bindsym Ctrl+$mod+r mode "shutdown"; exec /home/sensei-dre/.grab-lockscreen.sh; exec "i3-nagbar -m '(1) lock, (2) suspend, (3) restart, (4) reload config, (5) logout (6) shutdown'" 
+bindsym Ctrl+$mod+r mode "shutdown"; exec /home/sensei-dre/.grab-lockscreen.sh; exec "i3-nagbar -m '(1) logout, (2) reboot, (3) hibernate, (4) sleep, (5) shutdown'" 
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -210,6 +223,19 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# manage multi window  window (you can also use the mouse for that)
+mode "multi-window" {
+        bindsym Left move workspace to output left
+        bindsym Right move workspace to output right
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+m mode "default"
+}
+
+bindsym $mod+m mode "multi-window"
+
 # Start i3bar to display a workspace bar 
 bar {
 	font pango:Fira Code Retina 8
@@ -222,6 +248,3 @@ bar {
 		urgent_workspace 	#3f3f3f #ff0000 #ffffff
 	}
 }
-
-bindsym $mod+greater move workspace to output right
-bindsym $mod+less move workspace to output left 
