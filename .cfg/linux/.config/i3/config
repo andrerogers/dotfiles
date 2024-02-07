@@ -181,11 +181,11 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you want to logout off yo
 
 # shutdown, restart, logout of system
 mode "shutdown" {
-    	bindsym 1 exec "/path/to/i3-restore/i3-save && i3-msg exit"
-    	bindsym 2 exec "/path/to/i3-restore/i3-save && systemctl reboot"
+    	bindsym 1 exec "i3-save-tree --workspace 1 > /home/sensei-dre/.i3/workspace.json && i3-msg exit"
+    	bindsym 2 exec reboot
     	bindsym 3 exec systemctl hibernate
     	bindsym 4 exec systemctl suspend
-        bindsym 5 exec sudo shutdown now 
+        bindsym 4 exec sudo shutdown now 
 
         # back to normal: Enter or Escape or Ctrl+$mod+r
         bindsym Return mode "default"; exec killall i3-nagbar

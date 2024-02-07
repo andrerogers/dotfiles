@@ -16,6 +16,8 @@
 
 (setq device (getenv "PLAYGROUND_DEVICE"))
 
+(prefer-coding-system 'utf-8)
+
 ;; You will most likely need to adjust this font size for your system!
 (defvar runemacs/default-font-size 100)
 ;; (defvar efs/default-variable-font-size 180)
@@ -131,15 +133,15 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 
+(global-ede-mode t)
+
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook term-mode-hook shell-mode-hook eshell-mode-hook)) 
   (add-hook mode (lambda () 
 		   (display-line-numbers-mode 0))))
 
-
 (use-package 
   no-littering)
-
 					; no-littering doesn't set this by default so we must place
 ;; auto save files in the same path as it uses for sessions
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
@@ -373,10 +375,6 @@
 		      "d" '(dap-hydra t 
 				      :wk "debugger")))
 
-
-;; (require 'dap-lldb)
-;; (require 'dap-chrome)
-;; (dap-chrome-setup
 (use-package 
   company 
   :after lsp-mode 
@@ -395,6 +393,7 @@
   :hook (company-mode . company-box-mode))
 
 (add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook 'global-flycheck-mode)
 (eval-after-load 'company '(append '((company-c-headers company-solidity company-capf
 							company-dabbrev-code)) company-backends))
 
@@ -441,17 +440,78 @@
 
 ;; C/C++
 (use-package 
-  cc-mode)
+  clang-format
+  :ensure t
+  :config
+    (setq clang-format-style-option "google")
+  )
 
-(use-package 
-  google-c-style 
-  :hook (((c-mode c++-mode) . google-set-c-style) 
-	 (c-mode-common . google-make-newline-indent)))
+(use-package
+  cc-mode
+  :ensure nil  ; `cc-mode` is built-in, no need to download
+  :bind (:map c-mode-base-map
+         ("C-c C-c" . compile))  ; Bind C-c C-c to compile in all cc-mode derived modes
+  :hook ((c-mode . my-c-mode-customizations)
+         (c++-mode . my-c++-mode-customizations))
+  :config
+  (defun my-c-mode-customizations ()
+    ;; Customizations specific to c-mode
+    (setq c-default-style "linux"
+          c-basic-offset 4
+          indent-tabs-mode t)
+    ;; Set default compile command for C files
+    (unless (or (file-exists-p "Makefile")
+                (file-exists-p "makefile")
+                (file-exists-p "GNUmakefile"))
+      (set (make-local-variable 'compile-command)
+           (format "clang -Wall -g -o %s %s"
+                   (file-name-sans-extension (file-name-nondirectory buffer-file-name))
+                   (file-name-nondirectory buffer-file-name)))))
+  
+  (defun my-c++-mode-customizations ()
+    ;; Customizations specific to c++-mode
+    (setq c-default-style "linux"
+          c-basic-offset 4
+          indent-tabs-mode nil)  ; Assume C++ uses spaces not tabs
+    ;; Set default compile command for C++ files
+    (unless (or (file-exists-p "Makefile")
+                (file-exists-p "makefile")
+                (file-exists-p "GNUmakefile"))
+      (set (make-local-variable 'compile-command)
+           (format "clang++ -std=c++17 -Wall -g -o %s %s"
+                   (file-name-sans-extension (file-name-nondirectory buffer-file-name))
+                   (file-name-nondirectory buffer-file-name))))))
+
+;; Function to compile and run the current buffer
+(defun c-compile-and-run ()
+  (interactive)
+  (save-buffer)
+  (compile (format "clang -g -O2 -Wall -o %s %s && ./%s"
+                   (file-name-sans-extension (buffer-name))
+                   (buffer-name)
+                   (file-name-sans-extension (buffer-name)))))
+
+;; Use LLDB for debugging
+(setq gud-lldb-command-name "lldb")
+
+(add-hook 'cc-mode-hook
+          (lambda ()
+            (local-set-key (kbd "<f8>") 'my-compile-and-run)))
+
+;; Key binding to start LLDB debugging session
+(add-hook 'cc-mode-hook
+          (lambda ()
+            (local-set-key (kbd "<f5>") 'gud-lldb)))
+
+(add-hook 'cc-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c f") 'clang-format-region)))
+
+(add-hook 'before-save-hook 'clang-format-buffer nil t)
 
 ;; TypeScript
 (use-package 
   prettier-js 
-
   :delight 
   :custom (prettier-js-args '("--print-width" "100" "--single-quote" "true" "--trailing-comma"
 			      "all")))
@@ -496,23 +556,14 @@
   :config (setq typescript-indent-level 2))
 
 ;; Python
-;; (use-package elpy
-;;   :ensure t
-;;   :init
-;;   (elpy-enable))
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
 (use-package lsp-pyright
   :hook (python-mode . (lambda () (require 'lsp-pyright)))
   :init (when (executable-find "python3")
           (setq lsp-pyright-python-executable-cmd "python3")))
-;; (use-package py-autopep8)
-;; (use-package blacken)
-;; Enable Flycheck
-;; (when (require 'flycheck nil t)
-;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
-;; ;; Enable autopep8
-;; (require 'py-autopep8)
-;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 (use-package 
   evil-nerd-commenter 
@@ -521,6 +572,9 @@
 (use-package 
   rainbow-delimiters 
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(add-hook 'sh-mode-hook 'flycheck-mode)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -529,10 +583,13 @@
  '(custom-safe-themes
    '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
  '(package-selected-packages
-   '(blacken py-autopep8 smart-mode-line-atom-one-dark-theme markdown-preview-mode rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
+   '(clang-format flymake-collection company company-c-headers pylint blacken py-autopep8 smart-mode-line-atom-one-dark-theme markdown-preview-mode rustic rust-mode dap-mode which-key use-package typescript-mode solidity-mode rainbow-delimiters prettier-js no-littering magit lsp-ui lsp-treemacs lsp-ivy ivy-rich helpful google-c-style general flymake-shellcheck flycheck evil-nerd-commenter evil-collection elisp-format doom-themes doom-modeline counsel-projectile company-box command-log-mode ccls auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(desktop-save-mode 1)
+(desktop-read)

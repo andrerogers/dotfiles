@@ -28,7 +28,7 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$GOPATH/bin:/usr/bin:$PATH
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
 
-export EDITOR='emacsclient --tty'
+export EDITOR='vim'
 export VISUAL='emacsclient -c'
 export ALTERNATE_EDITOR='emacsclient --tty'
 
@@ -37,6 +37,11 @@ alias ls="ls --color=auto"
 alias l="ls -la"
 alias c="clear"
 alias e="~/.cfg/emacs/emacsctl.sh"
+alias gs="git status"
+alias gd="git diff"
+alias gl="git log"
+alias gp="git pull"
+alias gpp="git push"
 
 # use case-sensitive completion.
 CASE_SENSITIVE="true"
